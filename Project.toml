@@ -1,9 +1,15 @@
 name = "DimensionalDistributions"
 uuid = "2d8b4b49-4cda-4573-8194-25db521b04c9"
-authors = ["Seth Axen <seth@sethaxen.com> and contributors"]
 version = "0.1.0-DEV"
+authors = ["Seth Axen <seth@sethaxen.com> and contributors"]
+
+[deps]
+DimensionalData = "0703355e-b756-11e9-17c0-8b28908087d0"
+Distributions = "31c24e10-a181-5473-b8eb-7969acd0382f"
 
 [compat]
+DimensionalData = "0.29"
+Distributions = "0.25"
 julia = "1.10"
 
 [extras]
