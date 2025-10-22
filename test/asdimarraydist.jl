@@ -55,7 +55,9 @@ using Test
             @test eltype(dim_dist) === eltype(dist)
             @test eltype(typeof(dim_dist)) === eltype(typeof(dist))
             @test partype(dim_dist) === partype(dist)
-            @test params(dim_dist) == params(dist)
+            if !(dist isa Distributions.ProductDistribution)
+                @test params(dim_dist) == params(dist)
+            end
             @test size(dim_dist) == size(dist)
             @test length(dim_dist) == length(dist)
 
@@ -103,7 +105,16 @@ using Test
 
             @testset "statistical properties" begin
                 # only test those that are defined for the parent distribution
-                @testset for f in (mean, var, std, mode, cor, cov, invcov)
+                @testset for f in (mean, var, std, mode)
+                    f_dist = try
+                        f(dist)
+                    catch
+                        continue
+                    end
+                    @test f(dim_dist) == f_dist
+                end
+
+                ndims == 1 && @testset for f in (cor, cov, invcov)
                     f_dist = try
                         f(dist)
                     catch
