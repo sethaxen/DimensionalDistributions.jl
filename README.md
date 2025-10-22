@@ -17,8 +17,10 @@ We then decorate all appropriate distributions with the same dimension using `wi
 For the `DimArray`s to be preserved in the object returned by `sample`, we need to use FlexiChains.jl.
 
 ```julia
-using DimensionalData, DimensionalDistributions, LinearAlgebra, PDMats, Turing, FlexiChains
+using DimensionalData, DimensionalDistributions, LinearAlgebra, PDMats, Turing, FlexiChains, Random
 using FlexiChains: VNChain
+
+Random.seed!(42)
 
 schools = [
     "Choate",
@@ -44,8 +46,8 @@ y = DimArray([28.0, 8.0, -3.0, 7.0, -1.0, 1.0, 18.0, 12.0], school_dim)
     y ~ withdims(MvNormal(θ, Diagonal(σ)^2), dim)
 end
 
-# Note: currently does not return `DimArray`s with NUTS, MH, etc
-chns = sample(noncentered_eight(σ), Prior(), 1_000; chain_type=VNChain)
+model = noncentered_eight(σ) | (; y)
+chns = sample(model, NUTS(), MCMCThreads(), 1_000, 4; chain_type=VNChain)
 ```
 
 Within `chns`, `θ_tilde` and `θ` are stored as `DimArray`s.
@@ -55,12 +57,12 @@ julia> mean(chns[@varname(θ)])
 ├────────────────────────────────┴─────────────────────────────── dims ┐
   ↓ school Categorical{String} ["Choate", …, "Mt. Hermon"] Unordered
 └──────────────────────────────────────────────────────────────────────┘
- "Choate"             2.71771
- "Deerfield"          8.11949
- "Phillips Andover"   8.75137
- "Phillips Exeter"    4.73032
- "Hotchkiss"          2.6367
- "Lawrenceville"      8.14931
- "St. Paul's"        -5.17467
- "Mt. Hermon"        -2.64144
+ "Choate"            6.46528
+ "Deerfield"         4.84864
+ "Phillips Andover"  3.77529
+ "Phillips Exeter"   4.82087
+ "Hotchkiss"         3.57981
+ "Lawrenceville"     3.88299
+ "St. Paul's"        6.34798
+ "Mt. Hermon"        4.8472
 ```
