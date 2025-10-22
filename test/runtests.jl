@@ -12,4 +12,5 @@ using JET
     end
 
     include("abstractdimarraydist.jl")
+    include("asdimarraydist.jl")
 end
