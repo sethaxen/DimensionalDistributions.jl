@@ -19,7 +19,7 @@ jobs:
     strategy:
       matrix:
         downgrade_mode: ['alldeps']
-        julia-version: ['lts']
+        julia-version: ['1.10']
     steps:
       - uses: actions/checkout@v4
       - uses: julia-actions/setup-julia@v2
@@ -28,8 +28,8 @@ jobs:
           version: ${{ matrix.julia-version }}
       - uses: julia-actions/julia-downgrade-compat@v2
         with:
-          julia_version: ${{ steps['setup-julia'].outputs.julia-version }}
-          skip: Random,Statistics,Test
+          julia_version: ${{ matrix.julia-version }}
+          skip: Random,Statistics,Test,Aqua,JET
       - uses: julia-actions/julia-buildpkg@v1
       - uses: julia-actions/julia-runtest@v1
         with:
