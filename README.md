@@ -37,32 +37,33 @@ school_dim = Dim{:school}(schools)
 y = DimArray([28.0, 8.0, -3.0, 7.0, -1.0, 1.0, 18.0, 12.0], school_dim)
 σ = DimArray([15.0, 10.0, 16.0, 11.0, 9.0, 11.0, 10.0, 18.0], school_dim)
 
-@model function noncentered_eight(σ; dim=only(dims(σ)))
+@model function noncentered_eight(σ; dim=only(dims(σ)), n=length(σ))
     μ ~ Normal(0, 5)
     τ ~ truncated(Cauchy(0, 5); lower=0)
-    # workaround since rand(filldist(Normal(μ, τ), n)) fails
-    θ_tilde ~ withdims(MvNormal(ScalMat(length(dim), 1.0)), dim)
+    θ_tilde ~ withdims(filldist(Normal(), n), dim)
     θ := @. μ + τ * θ_tilde
-    y ~ withdims(MvNormal(θ, Diagonal(σ)^2), dim)
+    y ~ withdims(arraydist(Normal.(θ, σ)), dim)
 end
 
-model = noncentered_eight(σ) | (; y)
-chns = sample(model, NUTS(), MCMCThreads(), 1_000, 4; chain_type=VNChain)
+model = noncentered_eight(σ)
+model_cond = model | (; y)
+chns_prior = sample(model, Prior(), 4_000; chain_type=VNChain)
+chns = sample(model_cond, NUTS(), MCMCThreads(), 1_000, 4; chain_type=VNChain)
 ```
 
-Within `chns`, `θ_tilde` and `θ` are stored as `DimArray`s.
+Within `chns` and `chns_prior`, `θ_tilde` and `θ` are stored as `DimArray`s.
 ```julia
 julia> mean(chns[@varname(θ)])
 ┌ 8-element DimArray{Float64, 1} ┐
 ├────────────────────────────────┴─────────────────────────────── dims ┐
   ↓ school Categorical{String} ["Choate", …, "Mt. Hermon"] Unordered
 └──────────────────────────────────────────────────────────────────────┘
- "Choate"            6.46528
- "Deerfield"         4.84864
- "Phillips Andover"  3.77529
- "Phillips Exeter"   4.82087
- "Hotchkiss"         3.57981
- "Lawrenceville"     3.88299
- "St. Paul's"        6.34798
- "Mt. Hermon"        4.8472
+ "Choate"            6.22847
+ "Deerfield"         4.90917
+ "Phillips Andover"  3.83916
+ "Phillips Exeter"   4.67192
+ "Hotchkiss"         3.59698
+ "Lawrenceville"     4.00371
+ "St. Paul's"        6.17751
+ "Mt. Hermon"        4.80628
 ```
