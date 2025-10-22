@@ -119,8 +119,25 @@ function Random.rand!(
     return Random.rand!(rng, parent(dist), x)
 end
 function Base.rand(rng::Random.AbstractRNG, dist::AsDimArrayDistribution{0})
-    return Base.rand(rng, parent(dist))
+    return rand(rng, parent(dist))
 end
 function Base.rand(rng::Random.AbstractRNG, dist::AsDimArrayDistribution{0}, lengths::Dims)
-    return Base.rand(rng, parent(dist), lengths)
+    return rand(rng, parent(dist), lengths)
+end
+# these methods override the abstractdimarraydist methods so each signature should work
+# if the corresponding signature works for the parent distribution
+function Base.rand(rng::Random.AbstractRNG, dist::AsDimArrayDistribution)
+    return _maybe_dimarray(rand(rng, parent(dist)), Dimensions.dims(dist))
+end
+function Base.rand(
+    rng::Random.AbstractRNG, dist::AsDimArrayDistribution, lengths::Dims
+)
+    dims = Dimensions.dims(dist)
+    xs = map(Base.Fix2(DimensionalData.DimArray, dims), rand(rng, dist, lengths))
+    return xs
+end
+function Base.rand(
+    rng::Random.AbstractRNG, dist::AsDimArrayDistribution{0}, lengths::Dims
+)
+    return rand(rng, parent(dist), lengths)
 end
