@@ -98,8 +98,15 @@ using Test
             @testset "logpdf/pdf/loglikelihood" begin
                 @testset for sz in ((), (3,), (3, 4), (3, 4, 5))
                     x = rand(dist, sz...)
-                    @test logpdf(dim_dist, x) == logpdf(dist, x)
-                    @test pdf(dim_dist, x) == pdf(dist, x)
+                    if dist isa UnivariateDistribution && !isempty(sz)
+                        @test @test_deprecated(logpdf(dim_dist, x)) ==
+                            map(Base.Fix1(logpdf, dist), x)
+                        @test @test_deprecated(pdf(dim_dist, x)) ==
+                            map(Base.Fix1(pdf, dist), x)
+                    else
+                        @test logpdf(dim_dist, x) == logpdf(dist, x)
+                        @test pdf(dim_dist, x) == pdf(dist, x)
+                    end
                     @test loglikelihood(dim_dist, x) == loglikelihood(dist, x)
                 end
             end

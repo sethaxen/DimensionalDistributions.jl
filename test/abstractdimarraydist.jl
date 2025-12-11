@@ -131,19 +131,33 @@ end
         @testset for f in (logpdf, pdf)
             @testset for sz in ((), (3,), (3, 4), (3, 4, 5))
                 x = rand(rng, dist, sz...)
-                if !isempty(sz)
-                    @test f(dist, x) isa Array{<:Real,length(sz)}
+                if ndims == 0 && !isempty(sz)
+                    f_result = @test_deprecated f(dist, x)
+                    f_prod_result = @test_deprecated f(prod_dist, x)
                 else
-                    @test f(dist, x) isa Real
+                    f_result = f(dist, x)
+                    f_prod_result = f(prod_dist, x)
                 end
-                @test f(dist, x) ≈ f(prod_dist, x)
-                @test size(f(dist, x)) == sz
+                if !isempty(sz)
+                    @test f_result isa Array{<:Real,length(sz)}
+                else
+                    @test f_result isa Real
+                end
+                @test f_result ≈ f_prod_result
+                @test size(f_result) == sz
             end
 
-            sample_dim = ntuple(i -> Dim{Symbol(:draw, i)}(1:i), 3)
-            x = rand(rng, dist, sample_dim)
-            @test f(dist, x) isa DimArray{<:Real,3}
-            @test Dimensions.comparedims(Bool, sample_dim, dims(x))
+            @testset "dimensional arrays returned when appropriate" begin
+                sample_dim = ntuple(i -> Dim{Symbol(:draw, i)}(1:i), 3)
+                x_dim = rand(rng, dist, sample_dim)
+                if ndims == 0
+                    f_dim_result = @test_deprecated f(dist, x_dim)
+                else
+                    f_dim_result = f(dist, x_dim)
+                end
+                @test f_dim_result isa DimArray{<:Real,3}
+                @test Dimensions.comparedims(Bool, sample_dim, dims(f_dim_result))
+            end
         end
     end
 end
