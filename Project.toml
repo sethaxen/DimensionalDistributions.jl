@@ -1,7 +1,7 @@
 name = "DimensionalDistributions"
 uuid = "2d8b4b49-4cda-4573-8194-25db521b04c9"
-version = "0.1.0-DEV"
 authors = ["Seth Axen <seth@sethaxen.com> and contributors"]
+version = "0.1.0-DEV"
 
 [deps]
 DimensionalData = "0703355e-b756-11e9-17c0-8b28908087d0"
