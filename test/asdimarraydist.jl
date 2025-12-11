@@ -1,6 +1,7 @@
 using DimensionalData
 using DimensionalDistributions
 using Distributions
+using LinearAlgebra
 using Random
 using StatsBase
 using Test
@@ -10,7 +11,7 @@ using Test
         Normal(randn(), rand()),
         Beta(1.0f0, 2.0f0),
         Bernoulli(0.25),
-        MvNormal(randn(5), rand(5)),
+        MvNormal(randn(5), Diagonal(rand(5))),
         Dirichlet(rand(5) .+ 1),
         Multinomial(10, rand(Dirichlet(ones(5)))),
         LKJ(4, 2.0),
