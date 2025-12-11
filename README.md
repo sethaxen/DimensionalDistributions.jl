@@ -53,7 +53,9 @@ chns = sample(model_cond, NUTS(), MCMCThreads(), 1_000, 4; chain_type=VNChain)
 
 Within `chns` and `chns_prior`, `θ_tilde` and `θ` are stored as `DimArray`s.
 ```julia
-julia> mean(chns[@varname(θ)])
+julia> sample_dims = (:iter, :chain);
+
+julia> dropdims(mean(chns[@varname(θ)]; dims=sample_dims); dims=sample_dims)
 ┌ 8-element DimArray{Float64, 1} ┐
 ├────────────────────────────────┴─────────────────────────────── dims ┐
   ↓ school Categorical{String} ["Choate", …, "Mt. Hermon"] Unordered
