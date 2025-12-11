@@ -1,6 +1,7 @@
 using DimensionalData
 using DimensionalDistributions
 using Distributions
+using LinearAlgebra
 using Random
 using StatsBase
 using Test
@@ -10,7 +11,7 @@ using Test
         Normal(randn(), rand()),
         Beta(1.0f0, 2.0f0),
         Bernoulli(0.25),
-        MvNormal(randn(5), rand(5)),
+        MvNormal(randn(5), Diagonal(rand(5))),
         Dirichlet(rand(5) .+ 1),
         Multinomial(10, rand(Dirichlet(ones(5)))),
         LKJ(4, 2.0),
@@ -37,7 +38,7 @@ using Test
                 _dim_dist = DimensionalDistributions.AsDimArrayDistribution(dist, _dim)
                 @test _dim_dist isa DimensionalDistributions.AsDimArrayDistribution
                 @test parent(_dim_dist) === dist
-                @test Dimensions.dims(_dim_dist) isa Tuple{Vararg{<:Dimensions.Dimension}}
+                @test Dimensions.dims(_dim_dist) isa Tuple{Vararg{Dimensions.Dimension}}
                 @test Dimensions.comparedims(Bool, Dimensions.dims(_dim_dist), dim)
             end
         end
@@ -97,8 +98,15 @@ using Test
             @testset "logpdf/pdf/loglikelihood" begin
                 @testset for sz in ((), (3,), (3, 4), (3, 4, 5))
                     x = rand(dist, sz...)
-                    @test logpdf(dim_dist, x) == logpdf(dist, x)
-                    @test pdf(dim_dist, x) == pdf(dist, x)
+                    if dist isa UnivariateDistribution && !isempty(sz)
+                        @test @test_deprecated(logpdf(dim_dist, x)) ==
+                            map(Base.Fix1(logpdf, dist), x)
+                        @test @test_deprecated(pdf(dim_dist, x)) ==
+                            map(Base.Fix1(pdf, dist), x)
+                    else
+                        @test logpdf(dim_dist, x) == logpdf(dist, x)
+                        @test pdf(dim_dist, x) == pdf(dist, x)
+                    end
                     @test loglikelihood(dim_dist, x) == loglikelihood(dist, x)
                 end
             end

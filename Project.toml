@@ -1,7 +1,7 @@
 name = "DimensionalDistributions"
 uuid = "2d8b4b49-4cda-4573-8194-25db521b04c9"
-version = "0.1.0-DEV"
 authors = ["Seth Axen <seth@sethaxen.com> and contributors"]
+version = "0.1.0-DEV"
 
 [deps]
 DimensionalData = "0703355e-b756-11e9-17c0-8b28908087d0"
@@ -22,9 +22,10 @@ DimensionalDistributionsDynamicPPLExt = ["Bijectors", "DynamicPPL"]
 Aqua = "0.8"
 Bijectors = "0.9, 0.10, 0.11, 0.12, 0.13, 0.14, 0.15"
 DimensionalData = "0.28, 0.29"
-Distributions = "0.25.1"
+Distributions = "0.25.104"
 DynamicPPL = "0.37, 0.38, 0.39"
 JET = "0.9, 0.10"
+LinearAlgebra = "1"
 Random = "1"
 Statistics = "1"
 StatsBase = "0.33, 0.34"
@@ -33,8 +34,9 @@ julia = "1.10"
 
 [extras]
 Aqua = "4c88cf16-eb10-579e-8560-4a9242c79595"
+LinearAlgebra = "37e2e46d-f89d-539d-b4ee-838fcccc9c8e"
 JET = "c3a54625-cd67-489e-a8e7-0a5a0ff4e31b"
 Test = "8dfed614-e22c-5e08-85e1-65c5234f0b40"
 
 [targets]
-test = ["Aqua", "JET", "Test"]
+test = ["Aqua", "JET", "LinearAlgebra", "Test"]
