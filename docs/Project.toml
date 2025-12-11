@@ -2,6 +2,9 @@
 DimensionalDistributions = "2d8b4b49-4cda-4573-8194-25db521b04c9"
 Documenter = "e30172f5-a6a5-5a46-863b-614d45cd2de4"
 
+[sources]
+DimensionalDistributions = {path = ".."}
+
 [compat]
 DimensionalDistributions = "0.1"
 Documenter = "1"
