@@ -38,7 +38,7 @@ using Test
                 _dim_dist = DimensionalDistributions.AsDimArrayDistribution(dist, _dim)
                 @test _dim_dist isa DimensionalDistributions.AsDimArrayDistribution
                 @test parent(_dim_dist) === dist
-                @test Dimensions.dims(_dim_dist) isa Tuple{Vararg{<:Dimensions.Dimension}}
+                @test Dimensions.dims(_dim_dist) isa Tuple{Vararg{Dimensions.Dimension}}
                 @test Dimensions.comparedims(Bool, Dimensions.dims(_dim_dist), dim)
             end
         end
