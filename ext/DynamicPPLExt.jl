@@ -1,4 +1,4 @@
-module DimensionalDistributionsDynamicPPLExt
+module DynamicPPLExt
 
 using Bijectors: Bijectors
 using DimensionalData: DimensionalData, Dimensions
