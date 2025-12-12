@@ -26,6 +26,7 @@ using Turing: Turing  # trigger extension loading
         )
     end
 
+    include("test_helpers.jl")
     include("abstractdimarraydist.jl")
     include("asdimarraydist.jl")
     include("integration/bijectors.jl")
