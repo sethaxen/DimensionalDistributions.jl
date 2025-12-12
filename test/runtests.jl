@@ -8,7 +8,9 @@ using JET
         Aqua.test_all(DimensionalDistributions)
     end
     @testset "Code linting (JET.jl)" begin
-        JET.test_package(DimensionalDistributions; target_defined_modules=true)
+        JET.test_package(
+            DimensionalDistributions; target_modules=(DimensionalDistributions,)
+        )
     end
 
     include("abstractdimarraydist.jl")
