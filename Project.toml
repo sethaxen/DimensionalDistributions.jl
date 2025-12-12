@@ -22,7 +22,7 @@ BijectorsExt = "Bijectors"
 DynamicPPLExt = ["Bijectors", "DynamicPPL"]
 
 [compat]
-Bijectors = "0.9, 0.10, 0.11, 0.12, 0.13, 0.14, 0.15"
+Bijectors = "0.14, 0.15"
 DimensionalData = "0.28, 0.29"
 Distributions = "0.25.104"
 DynamicPPL = "0.37, 0.38, 0.39"
