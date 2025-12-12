@@ -1,5 +1,6 @@
 [deps]
 Aqua = "4c88cf16-eb10-579e-8560-4a9242c79595"
+Bijectors = "76274a88-744f-5084-9051-94815aaf08c4"
 DimensionalData = "0703355e-b756-11e9-17c0-8b28908087d0"
 DimensionalDistributions = "2d8b4b49-4cda-4573-8194-25db521b04c9"
 Distributions = "31c24e10-a181-5473-b8eb-7969acd0382f"
@@ -16,6 +17,7 @@ DimensionalDistributions = {path = ".."}
 
 [compat]
 Aqua = "0.8"
+Bijectors = "0.14, 0.15"
 DimensionalData = "0.28, 0.29"
 DimensionalDistributions = "0.1"
 Distributions = "0.25.104"
