@@ -1,7 +1,7 @@
-using DimensionalDistributions
-using Test
 using Aqua
+using DimensionalDistributions
 using JET
+using Test
 using Turing: Turing  # trigger extension loading
 
 @testset "DimensionalDistributions.jl" begin
