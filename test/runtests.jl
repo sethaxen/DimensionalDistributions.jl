@@ -29,4 +29,5 @@ using Turing: Turing  # trigger extension loading
     include("abstractdimarraydist.jl")
     include("asdimarraydist.jl")
     include("integration/bijectors.jl")
+    include("integration/turing.jl")
 end
