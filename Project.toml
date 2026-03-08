@@ -23,7 +23,7 @@ DynamicPPLExt = ["Bijectors", "DynamicPPL"]
 
 [compat]
 Bijectors = "0.14, 0.15"
-DimensionalData = "0.28, 0.29"
+DimensionalData = "0.28, 0.29, 0.30"
 Distributions = "0.25.104"
 DynamicPPL = "0.37, 0.38, 0.39"
 Random = "1"

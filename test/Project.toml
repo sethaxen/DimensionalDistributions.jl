@@ -19,7 +19,7 @@ DimensionalDistributions = {path = ".."}
 [compat]
 Aqua = "0.8"
 Bijectors = "0.14, 0.15"
-DimensionalData = "0.28, 0.29"
+DimensionalData = "0.28, 0.29, 0.30"
 DimensionalDistributions = "0.1"
 Distributions = "0.25.104"
 FlexiChains = "0.1.1, 0.2"

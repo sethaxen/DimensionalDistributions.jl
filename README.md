@@ -60,12 +60,12 @@ julia> dropdims(mean(chns[@varname(θ)]; dims=sample_dims); dims=sample_dims)
 ├────────────────────────────────┴─────────────────────────────── dims ┐
   ↓ school Categorical{String} ["Choate", …, "Mt. Hermon"] Unordered
 └──────────────────────────────────────────────────────────────────────┘
- "Choate"            6.22847
- "Deerfield"         4.90917
- "Phillips Andover"  3.83916
- "Phillips Exeter"   4.67192
- "Hotchkiss"         3.59698
- "Lawrenceville"     4.00371
- "St. Paul's"        6.17751
- "Mt. Hermon"        4.80628
+ "Choate"            6.13287
+ "Deerfield"         4.93795
+ "Phillips Andover"  3.95617
+ "Phillips Exeter"   4.77962
+ "Hotchkiss"         3.49528
+ "Lawrenceville"     3.95894
+ "St. Paul's"        6.27694
+ "Mt. Hermon"        4.79921
 ```
