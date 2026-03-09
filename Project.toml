@@ -19,8 +19,8 @@ Bijectors = "76274a88-744f-5084-9051-94815aaf08c4"
 DynamicPPL = "366bfd00-2699-11ea-058f-f148b4cae6d8"
 
 [extensions]
+BijectorsAbstractPPLExt = ["Bijectors", "AbstractPPL"]
 BijectorsExt = "Bijectors"
-DimensionalDistributionsBijectorsAbstractPPLExt = ["Bijectors", "AbstractPPL"]
 DynamicPPLExt = ["Bijectors", "DynamicPPL"]
 
 [compat]
