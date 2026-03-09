@@ -27,8 +27,11 @@ using DynamicPPL: DynamicPPL
         dim_array_transform = DimArrayTransform(Dimensions.dims(d))
         return dim_array_transform ∘ reshape_transform
     end
-    function DynamicPPL.from_vec_transform(d::DimensionalDistributions.AsDimArrayDistribution)
-        return DimArrayTransform(Dimensions.dims(d)) ∘ DynamicPPL.from_vec_transform(parent(d))
+    function DynamicPPL.from_vec_transform(
+        d::DimensionalDistributions.AsDimArrayDistribution
+    )
+        return DimArrayTransform(Dimensions.dims(d)) ∘
+               DynamicPPL.from_vec_transform(parent(d))
     end
 
     function DynamicPPL.from_linked_vec_transform(
