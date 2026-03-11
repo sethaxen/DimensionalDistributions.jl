@@ -1,4 +1,4 @@
-module DimensionalDistributionsBijectorsExt
+module BijectorsExt
 
 using DimensionalDistributions: DimensionalDistributions
 using Bijectors: Bijectors
