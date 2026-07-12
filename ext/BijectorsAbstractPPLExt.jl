@@ -1,4 +1,4 @@
-module DimensionalDistributionsBijectorsAbstractPPLExt
+module BijectorsAbstractPPLExt
 
 using AbstractPPL: AbstractPPL
 using Bijectors: Bijectors
