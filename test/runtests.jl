@@ -7,10 +7,13 @@ using JET
     @testset "Code quality (Aqua.jl)" begin
         Aqua.test_all(DimensionalDistributions)
     end
-    @testset "Code linting (JET.jl)" begin
-        JET.test_package(
-            DimensionalDistributions; target_modules=(DimensionalDistributions,)
-        )
+    # JET does not support prerelease versions of Julia
+    if isempty(VERSION.prerelease)
+        @testset "Code linting (JET.jl)" begin
+            JET.test_package(
+                DimensionalDistributions; target_modules=(DimensionalDistributions,)
+            )
+        end
     end
 
     include("abstractdimarraydist.jl")
